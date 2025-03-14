@@ -1,24 +1,35 @@
-name: Run Notifier Daily
+name: Epic Games Free Notifier
 
 on:
   schedule:
-    - cron: "30 15 * * *"  # Runs at 3:30 PM UTC (8:30 PM IST)
+    - cron: "0 15 * * *"  # Runs daily at 8:30 PM IST (15:00 UTC)
   workflow_dispatch:  # Allows manual trigger
 
 jobs:
-  run-script:
+  notify:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: 🚀 Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v3
+      - name: 🐍 Set Up Python
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: "3.10"
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - name: 📦 Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-      - name: Run notifier script
+      - name: 🔑 Set Environment Variables
+        run: |
+          echo "DISCORD_WEBHOOK_URL=${{ secrets.DISCORD_WEBHOOK_URL }}" >> $GITHUB_ENV
+          echo "TWILIO_SID=${{ secrets.TWILIO_SID }}" >> $GITHUB_ENV
+          echo "TWILIO_AUTH_TOKEN=${{ secrets.TWILIO_AUTH_TOKEN }}" >> $GITHUB_ENV
+          echo "TWILIO_WHATSAPP_NUMBER=${{ secrets.TWILIO_WHATSAPP_NUMBER }}" >> $GITHUB_ENV
+          echo "USER_WHATSAPP_NUMBER=${{ secrets.USER_WHATSAPP_NUMBER }}" >> $GITHUB_ENV
+
+      - name: 🚀 Run Notifier
         run: python notifier.py
