@@ -2,7 +2,7 @@ name: Epic Games Free Notifier
 
 on:
   schedule:
-    - cron: "0 15 * * *"  # Runs daily at 8:30 PM IST (15:00 UTC)
+    - cron: "0 15 * * 5"  # Runs weekly on friday at 8:30 PM IST (15:00 UTC)
   workflow_dispatch:  # Allows manual trigger
 
 jobs:
@@ -31,5 +31,13 @@ jobs:
           echo "TWILIO_WHATSAPP_NUMBER=${{ secrets.TWILIO_WHATSAPP_NUMBER }}" >> $GITHUB_ENV
           echo "USER_WHATSAPP_NUMBER=${{ secrets.USER_WHATSAPP_NUMBER }}" >> $GITHUB_ENV
 
+      - name: 🐛 Debug Environment Variables
+        run: |
+          echo "DISCORD_WEBHOOK_URL=$DISCORD_WEBHOOK_URL"
+          echo "TWILIO_SID=$TWILIO_SID"
+          echo "TWILIO_AUTH_TOKEN=$TWILIO_AUTH_TOKEN"
+          echo "TWILIO_WHATSAPP_NUMBER=$TWILIO_WHATSAPP_NUMBER"
+          echo "USER_WHATSAPP_NUMBER=$USER_WHATSAPP_NUMBER"
+          
       - name: 🚀 Run Notifier
         run: python notifier.py
