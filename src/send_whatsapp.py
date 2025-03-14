@@ -14,7 +14,7 @@ def send_whatsapp_message(games):
 
     message_body = "🔥 *Epic Games Free Games This Week!* 🎮\n\n"
     for game in games:
-        message_body += f'🆓 *{game["title"]}*\n🔗 {game["url"]}\u200B\n⏳ Offer Ends: {game["end_date"]}\n\n'
+        message_body += f'🆓 *{game["title"]}*\n🔗 {game["url"]}\n⏳ Offer Ends: {game["end_date"]}\n\n'
 
     try:
         message = client.messages.create(

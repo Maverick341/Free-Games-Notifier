@@ -14,7 +14,7 @@ def send_discord_message(games):
     message = {
     "content": "**🔥 Free Epic Games Available This Week! 🔥**\n\n"
     + "\n".join([
-        f'🆓 **{game["title"]}**\n🔗 [Claim Now](<{game["url"]}>)\n⏳ *Offer Ends: {game["end_date"]}*\n'
+        f'🆓 **{game["title"]}**\n🔗 [Claim Now]({game["url"]})\n⏳ *Offer Ends: {game["end_date"]}*\n'
         for game in games
     ])
 }
