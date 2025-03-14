@@ -1,7 +1,7 @@
 import requests
 import datetime
 import json
-from config import EPIC_FREE_GAMES_URL
+from src.config import EPIC_FREE_GAMES_URL
 
 def get_free_games():
     response = requests.get(EPIC_FREE_GAMES_URL)

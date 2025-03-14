@@ -1,5 +1,5 @@
 from twilio.rest import Client # type: ignore
-from config import TWILIO_SID, TWILIO_AUTH_TOKEN, TWILIO_WHATSAPP_NUMBER, USER_WHATSAPP_NUMBER
+from src.config import TWILIO_SID, TWILIO_AUTH_TOKEN, TWILIO_WHATSAPP_NUMBER, USER_WHATSAPP_NUMBER
 
 def send_whatsapp_message(games):
     if not all([TWILIO_SID, TWILIO_AUTH_TOKEN, TWILIO_WHATSAPP_NUMBER, USER_WHATSAPP_NUMBER]):

@@ -1,5 +1,5 @@
 import requests
-from config import DISCORD_WEBHOOK_URL
+from src.config import DISCORD_WEBHOOK_URL
 
 def send_discord_message(games):
     if not DISCORD_WEBHOOK_URL:

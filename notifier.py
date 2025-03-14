@@ -1,6 +1,6 @@
-from fetch_games import get_free_games
-from send_discord import send_discord_message
-from send_whatsapp import send_whatsapp_message
+from src.fetch_games import get_free_games
+from src.send_discord import send_discord_message
+from src.send_whatsapp import send_whatsapp_message
 
 def main():
     print("🚀 Fetching free Epic Games...")
