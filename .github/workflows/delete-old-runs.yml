@@ -1,4 +1,4 @@
-name: 🗑️ Auto Delete Old Workflow Runs
+name: Auto Delete Old Workflow Runs
 
 on:
   schedule:
