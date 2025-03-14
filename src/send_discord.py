@@ -1,26 +1,47 @@
 import requests
-from src.config import DISCORD_WEBHOOK_URL
+import json
+from src.config import DISCORD_WEBHOOK_URLS
 
 def send_discord_message(games):
-    if not DISCORD_WEBHOOK_URL:
-        print("❌ Discord Webhook URL is not set.")
+    if not DISCORD_WEBHOOK_URLS or DISCORD_WEBHOOK_URLS == [""]:
+        print("❌ Discord Webhook URLs is/are not set.")
         return
     
     if not games:
         print("⚠️ No free games available this week.")
         return
+    
+    message = {
+    "content": "**🔥 Free Epic Games Available This Week! 🔥**\n\n"
+    + "\n".join([
+        f'🆓 **{game["title"]}**\n🔗 [Claim Now](<{game["url"]}>)\n⏳ *Offer Ends: {game["end_date"]}*\n'
+        for game in games
+    ])
+}
 
-    message = "**🔥 Epic Games Free Games This Week! 🎮**\n\n"
-    for game in games:
-        message += f'🆓 **{game["title"]}**\n🔗 [Claim Now](<{game["url"]}>)\n⏳ *Offer Ends: {game["end_date"]}*\n\n'
 
-    payload = {"content": message}
-    response = requests.post(DISCORD_WEBHOOK_URL, json=payload)
+    headers = {"Content-Type": "application/json"}
 
-    if response.status_code == 204:
-        print("✅ Successfully sent to Discord!")
-    else:
-        print(f"❌ Failed to send message. Status Code: {response.status_code}")
+    for webhook_url in DISCORD_WEBHOOK_URLS:
+        webhook_url = webhook_url.strip()  # Remove extra spaces
+        if webhook_url:
+            response = requests.post(webhook_url, data=json.dumps(message), headers=headers)
+            if response.status_code == 204:
+                print(f"✅ Message sent successfully to {webhook_url}")
+            else:
+                print(f"❌ Failed to send message to {webhook_url}. Status Code: {response.status_code}")
+
+    # message = "**🔥 Epic Games Free Games This Week! 🎮**\n\n"
+    # for game in games:
+    #     message += f'🆓 **{game["title"]}**\n🔗 [Claim Now](<{game["url"]}>)\n⏳ *Offer Ends: {game["end_date"]}*\n\n'
+
+    # payload = {"content": message}
+    # response = requests.post(DISCORD_WEBHOOK_URLS, json=payload)
+
+    # if response.status_code == 204:
+    #     print("✅ Successfully sent to Discord!")
+    # else:
+    #     print(f"❌ Failed to send message. Status Code: {response.status_code}")
 
 # Testing
 if __name__ == "__main__":
