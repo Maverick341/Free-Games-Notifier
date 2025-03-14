@@ -90,6 +90,12 @@ git push origin main
 The bot will now **run automatically every week** and send notifications.
 
 ---
+## 🔮 Future Improvements
+- ✅ Support for WhatsApp Cloud API (Free official API from Meta)
+- ✅ Integration with Telegram Bot API (Send free notifications via Telegram)
+- ✅ Email (SMTP) alerts (For users without messaging apps)
+
+---
 
 ## 📜 License  
 This project is licensed under the [MIT License](LICENSE).
