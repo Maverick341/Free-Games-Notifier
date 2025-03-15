@@ -1,4 +1,5 @@
 import requests
+import json
 from src.config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_IDS
 
 def send_telegram_message(games):
@@ -16,17 +17,19 @@ def send_telegram_message(games):
         for game in games
     ])
 
+    headers = {"Content-Type": "application/json"}
+
     for chat_id in TELEGRAM_CHAT_IDS:
         chat_id = chat_id.strip()
         if chat_id:
             url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
             payload = {
-                "chat_id": TELEGRAM_CHAT_IDS,
+                "chat_id": chat_id,
                 "text": message,
                 "parse_mode": "Markdown"
             }
 
-            response = requests.post(url, json=payload)
+            response = requests.post(url, data=json.dumps(payload), headers=headers)
 
             if response.status_code == 200:
                 print("✅ Message sent successfully to Chat ID: {chat_id}")
