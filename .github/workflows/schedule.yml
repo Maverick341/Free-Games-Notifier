@@ -25,19 +25,23 @@ jobs:
 
       - name: 🔑 Set Environment Variables
         run: |
-          echo "DISCORD_WEBHOOK_URL=${{ secrets.DISCORD_WEBHOOK_URL }}" >> $GITHUB_ENV
+          echo "DISCORD_WEBHOOK_URLS=${{ secrets.DISCORD_WEBHOOK_URLS }}" >> $GITHUB_ENV
           echo "TWILIO_SID=${{ secrets.TWILIO_SID }}" >> $GITHUB_ENV
           echo "TWILIO_AUTH_TOKEN=${{ secrets.TWILIO_AUTH_TOKEN }}" >> $GITHUB_ENV
           echo "TWILIO_WHATSAPP_NUMBER=${{ secrets.TWILIO_WHATSAPP_NUMBER }}" >> $GITHUB_ENV
           echo "USER_WHATSAPP_NUMBER=${{ secrets.USER_WHATSAPP_NUMBER }}" >> $GITHUB_ENV
+          echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> $GITHUB_ENV
+          echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}" >> $GITHUB_ENV
 
       - name: 🐛 Debug Environment Variables
         run: |
-          echo "DISCORD_WEBHOOK_URL=$DISCORD_WEBHOOK_URL"
+          echo "DISCORD_WEBHOOK_URLS=$DISCORD_WEBHOOK_URLS"
           echo "TWILIO_SID=$TWILIO_SID"
           echo "TWILIO_AUTH_TOKEN=$TWILIO_AUTH_TOKEN"
           echo "TWILIO_WHATSAPP_NUMBER=$TWILIO_WHATSAPP_NUMBER"
           echo "USER_WHATSAPP_NUMBER=$USER_WHATSAPP_NUMBER"
+          echo "TELEGRAM_BOT_TOKEN=$TELEGRAM_BOT_TOKEN"
+          echo "TELEGRAM_CHAT_ID=$TELEGRAM_CHAT_ID"
           
       - name: 🚀 Run Notifier
         run: python notifier.py

@@ -34,7 +34,7 @@ pip install -r requirements.txt
 ### **Step 4: Configure Environment Variables**  
 Create a `.env` file in the project folder and add the following variables:
 ```ini
-DISCORD_WEBHOOK_URL=your_discord_webhook_url
+DISCORD_WEBHOOK_URLS=your_discord_webhook_urls
 TWILIO_SID=your_twilio_sid
 TWILIO_AUTH_TOKEN=your_twilio_auth_token
 TWILIO_WHATSAPP_NUMBER=whatsapp:+14155238886
@@ -60,7 +60,7 @@ Go to the **original repo** → Click **Fork**.
 2. Navigate to **Settings → Secrets and variables → Actions → New repository secret**.
 3. Add the following secrets (**without quotes**):
    ```sh
-   DISCORD_WEBHOOK_URL=your_discord_webhook_url
+   DISCORD_WEBHOOK_URLS=your_discord_webhook_urls
    TWILIO_SID=your_twilio_sid
    TWILIO_AUTH_TOKEN=your_twilio_auth_token
    TWILIO_WHATSAPP_NUMBER=whatsapp:+14155238886
