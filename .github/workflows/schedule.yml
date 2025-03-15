@@ -31,7 +31,7 @@ jobs:
           echo "TWILIO_WHATSAPP_NUMBER=${{ secrets.TWILIO_WHATSAPP_NUMBER }}" >> $GITHUB_ENV
           echo "USER_WHATSAPP_NUMBER=${{ secrets.USER_WHATSAPP_NUMBER }}" >> $GITHUB_ENV
           echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> $GITHUB_ENV
-          echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}" >> $GITHUB_ENV
+          echo "TELEGRAM_CHAT_IDS=${{ secrets.TELEGRAM_CHAT_IDS }}" >> $GITHUB_ENV
 
       - name: 🐛 Debug Environment Variables
         run: |
@@ -41,7 +41,7 @@ jobs:
           echo "TWILIO_WHATSAPP_NUMBER=$TWILIO_WHATSAPP_NUMBER"
           echo "USER_WHATSAPP_NUMBER=$USER_WHATSAPP_NUMBER"
           echo "TELEGRAM_BOT_TOKEN=$TELEGRAM_BOT_TOKEN"
-          echo "TELEGRAM_CHAT_ID=$TELEGRAM_CHAT_ID"
+          echo "TELEGRAM_CHAT_IDS=$TELEGRAM_CHAT_IDS"
           
       - name: 🚀 Run Notifier
         run: python notifier.py

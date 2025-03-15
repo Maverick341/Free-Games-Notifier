@@ -1,8 +1,8 @@
 import requests
-from src.config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
+from src.config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_IDS
 
 def send_telegram_message(games):
-    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
+    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_IDS or TELEGRAM_CHAT_IDS == [""]:
         print("❌ Telegram Bot Token or Chat ID is not set.")
         return
     
@@ -16,19 +16,22 @@ def send_telegram_message(games):
         for game in games
     ])
 
-    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-    payload = {
-        "chat_id": TELEGRAM_CHAT_ID,
-        "text": message,
-        "parse_mode": "Markdown"
-    }
+    for chat_id in TELEGRAM_CHAT_IDS:
+        chat_id = chat_id.strip()
+        if chat_id:
+            url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+            payload = {
+                "chat_id": TELEGRAM_CHAT_IDS,
+                "text": message,
+                "parse_mode": "Markdown"
+            }
 
-    response = requests.post(url, json=payload)
+            response = requests.post(url, json=payload)
 
-    if response.status_code == 200:
-        print("✅ Telegram message sent successfully!")
-    else:
-        print(f"❌ Error sending message: {response.text}")
+            if response.status_code == 200:
+                print("✅ Message sent successfully to Chat ID: {chat_id}")
+            else:
+                print(f"❌ Error sending message to {chat_id}: {response.text}")
 
 if __name__ == "__main__":
     test_games = [
