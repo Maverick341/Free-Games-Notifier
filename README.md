@@ -6,6 +6,7 @@ This project automatically fetches free games from the **Epic Games Store** and 
 - Fetches **weekly free games** from the Epic Games Store.
 - Sends notifications via **WhatsApp (Twilio API)**.
 - Notifies in **Discord channels** using webhooks.
+- Sends alerts via **Telegram Bot** and in the channels where the bot is added.
 - Can be run **locally** or via **GitHub Actions (Scheduled Run)**.
 
 ---
@@ -34,19 +35,26 @@ pip install -r requirements.txt
 ### **Step 4: Configure Environment Variables**  
 Create a `.env` file in the project folder and add the following variables:
 ```ini
-DISCORD_WEBHOOK_URLS=your_discord_webhook_urls
+DISCORD_WEBHOOK_URLS=your_discord_webhook_url1,your_discord_webhook_url1,etc
 TWILIO_SID=your_twilio_sid
 TWILIO_AUTH_TOKEN=your_twilio_auth_token
 TWILIO_WHATSAPP_NUMBER=whatsapp:+14155238886
 USER_WHATSAPP_NUMBER=whatsapp:+your_number
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token
+TELEGRAM_CHAT_IDS=your_chat_id_1,your_chat_id_2,etc
 ```
-⚠ **Note:** You must add your own **Discord Webhook URL**, **Twilio API credentials**, and **Twilio WhatsApp number**. You also need to **set up Twilio Sandbox** to send and receive messages.
+⚠ **Note:** You must add your own **Discord Webhook URL**, **Twilio API credentials**, **Twilio WhatsApp number**, **Telegram Bot Token** and **Telegram Chat IDs**. You also need to **set up Twilio Sandbox** to send and receive messages.
+
+For Telegram:
+- Create a bot via BotFather.
+- Obtain the **Bot Token**
+- Get your chat ID using `https://api.telegram.org/bot<TOKEN>/getUpdates`.
 
 ### **Step 5: Run the Bot**  
 ```sh
 python notifier.py
 ```
-This will fetch the free games and send notifications via **WhatsApp & Discord**.
+This will fetch the free games and send notifications via **WhatsApp, Discord & Telegram**.
 
 ---
 
@@ -60,13 +68,15 @@ Go to the **original repo** → Click **Fork**.
 2. Navigate to **Settings → Secrets and variables → Actions → New repository secret**.
 3. Add the following secrets (**without quotes**):
    ```sh
-   DISCORD_WEBHOOK_URLS=your_discord_webhook_urls
+   DISCORD_WEBHOOK_URLS=your_discord_webhook_url1,your_discord_webhook_url1,etc
    TWILIO_SID=your_twilio_sid
    TWILIO_AUTH_TOKEN=your_twilio_auth_token
    TWILIO_WHATSAPP_NUMBER=whatsapp:+14155238886
    USER_WHATSAPP_NUMBER=whatsapp:+your_number
+   TELEGRAM_BOT_TOKEN=your_telegram_bot_token
+   TELEGRAM_CHAT_IDS=your_chat_id_1,your_chat_id_2,etc
    ```
-   ⚠ **Note:** Each user must configure their own **Discord Webhook**, **Twilio credentials**, and **Twilio WhatsApp number** in GitHub Secrets.
+   ⚠ **Note:** Each user must configure their own **Discord Webhook**, **Twilio credentials**, **Twilio WhatsApp number**, and **Telegram Bot settings** in GitHub Secrets.
 
 ### **Step 3: Enable GitHub Actions**  
 1. Go to your repo’s **Actions** tab.
@@ -91,9 +101,10 @@ The bot will now **run automatically every week** and send notifications.
 
 ---
 ## 🔮 Future Improvements
-- ✅ Support for WhatsApp Cloud API (Free official API from Meta)
-- ✅ Integration with Telegram Bot API (Send free notifications via Telegram)
-- ✅ Email (SMTP) alerts (For users without messaging apps)
+- ✅ ~~Integration with Telegram Bot API (Send free notifications via Telegram)~~
+- 🚀 Support for WhatsApp Cloud API (Free official API from Meta)
+- 🚀 Integration with Telegram Bot API (Send free notifications via Telegram)
+- 🚀 Email (SMTP) alerts (For users without messaging apps)
 
 ---
 
