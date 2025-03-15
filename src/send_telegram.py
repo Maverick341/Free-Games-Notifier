@@ -32,7 +32,7 @@ def send_telegram_message(games):
             response = requests.post(url, data=json.dumps(payload), headers=headers)
 
             if response.status_code == 200:
-                print("✅ Message sent successfully to Chat ID: {chat_id}")
+                print(f"✅ Telegram Message sent successfully to Chat ID: {chat_id}")
             else:
                 print(f"❌ Error sending message to {chat_id}: {response.text}")
 
