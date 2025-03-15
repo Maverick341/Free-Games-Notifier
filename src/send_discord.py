@@ -31,17 +31,6 @@ def send_discord_message(games):
             else:
                 print(f"❌ Failed to send message to {webhook_url}. Status Code: {response.status_code}")
 
-    # message = "**🔥 Epic Games Free Games This Week! 🎮**\n\n"
-    # for game in games:
-    #     message += f'🆓 **{game["title"]}**\n🔗 [Claim Now](<{game["url"]}>)\n⏳ *Offer Ends: {game["end_date"]}*\n\n'
-
-    # payload = {"content": message}
-    # response = requests.post(DISCORD_WEBHOOK_URLS, json=payload)
-
-    # if response.status_code == 204:
-    #     print("✅ Successfully sent to Discord!")
-    # else:
-    #     print(f"❌ Failed to send message. Status Code: {response.status_code}")
 
 # Testing
 if __name__ == "__main__":
