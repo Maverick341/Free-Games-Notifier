@@ -1,6 +1,6 @@
 import requests
 import json
-from src.config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_IDS
+from src.config import TELEGRAM_BOT_TOKEN
 from src.db.mongodb import get_subscribed_chat_ids
 
 def send_telegram_message(games):
