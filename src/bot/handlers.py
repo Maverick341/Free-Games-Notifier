@@ -2,7 +2,7 @@ from typing import Final
 from telegram import Update # type: ignore
 from telegram.ext import Application, ContextTypes, MessageHandler, filters, CommandHandler # type: ignore
 from src.config import TELEGRAM_BOT_TOKEN
-# from src.db.mongodb import add_subscriber, remove_subscriber
+from src.db.mongodb import add_subscriber, remove_subscriber
 
 BOT_USERNAME: Final = '@FGN194_bot'
 
@@ -24,9 +24,9 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("🚫 Only admins can start the bot in this chat.")
         return
     
-    # add_subscriber(chat_id)
+    response = add_subscriber(chat_id)
     if update.message:
-        await update.message.reply_text("✅ You're now subscribed!")
+        await update.message.reply_text(response)
 
 async def stop_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update.effective_chat.id
@@ -35,9 +35,9 @@ async def stop_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("🚫 Only admins can stop the bot in this chat.")
         return
     
-    # remove_subscriber(chat_id)
+    response = remove_subscriber(chat_id)
     if update.message:
-        await update.message.reply_text("❌ You've been unsubscribed.")
+        await update.message.reply_text(response)
 
 
 
