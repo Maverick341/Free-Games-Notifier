@@ -31,7 +31,7 @@ jobs:
           echo "TWILIO_WHATSAPP_NUMBER=${{ secrets.TWILIO_WHATSAPP_NUMBER }}" >> $GITHUB_ENV
           echo "USER_WHATSAPP_NUMBER=${{ secrets.USER_WHATSAPP_NUMBER }}" >> $GITHUB_ENV
           echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> $GITHUB_ENV
-          echo "TELEGRAM_CHAT_IDS=${{ secrets.TELEGRAM_CHAT_IDS }}" >> $GITHUB_ENV
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> $GITHUB_ENV
 
       - name: 🐛 Debug Environment Variables
         run: |
