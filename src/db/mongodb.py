@@ -46,3 +46,7 @@ def remove_subscriber(chat_id: int) -> str:
             {"$set": {"subscribed": False}}
         )
         return "❌ You've been unsubscribed."
+
+def get_subscribed_chat_ids() -> list[int]:
+    cursor = subscribers_collection.find({"subscribed": True}, {"chat_id": 1, "_id": 0})
+    return [doc["chat_id"] for doc in cursor]
