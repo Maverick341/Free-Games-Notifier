@@ -4,7 +4,7 @@ from src.config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_IDS
 from src.db.mongodb import get_subscribed_chat_ids
 
 def send_telegram_message(games):
-    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_IDS or TELEGRAM_CHAT_IDS == [""]:
+    if not TELEGRAM_BOT_TOKEN:
         print("❌ Telegram Bot Token or Chat ID is not set.")
         return
     
