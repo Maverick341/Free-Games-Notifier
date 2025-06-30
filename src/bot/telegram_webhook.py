@@ -21,6 +21,10 @@ application.add_handler(CommandHandler('stop', stop_command))
 application.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), handle_user_messages))
 application.add_error_handler(error)
 
+@app.on_event("startup")
+async def startup_event():
+    await application.initialize()
+
 @app.post(f"/{WEBHOOK_SECRET}")
 async def telegram_webhook(request: Request):
     data = await request.json()
