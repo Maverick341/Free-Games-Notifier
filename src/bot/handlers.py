@@ -66,19 +66,19 @@ async def handle_user_messages(update: Update, context: ContextTypes.DEFAULT_TYP
 async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
     print(f'Update {update} caused error {context.error}')
 
-if __name__ == '__main__':
-    print('Starting telegram bot...')
-    app = Application.builder().token(TELEGRAM_BOT_TOKEN).build()
+# if __name__ == '__main__':
+#     print('Starting telegram bot...')
+#     app = Application.builder().token(TELEGRAM_BOT_TOKEN).build()
 
-    # Commands
-    app.add_handler(CommandHandler('start', start_command))
-    app.add_handler(CommandHandler('stop', stop_command))
+#     # Commands
+#     app.add_handler(CommandHandler('start', start_command))
+#     app.add_handler(CommandHandler('stop', stop_command))
 
-    # Messages
-    app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), handle_user_messages))
+#     # Messages
+#     app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), handle_user_messages))
 
-    # Error
-    app.add_error_handler(error)
+#     # Error
+#     app.add_error_handler(error)
 
-    print('Polling...')
-    app.run_polling(poll_interval=3)
+#     print('Polling...')
+#     app.run_polling(poll_interval=3)
