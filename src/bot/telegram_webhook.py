@@ -24,7 +24,7 @@ application.add_error_handler(error)
 @app.post(f"/{WEBHOOK_SECRET}")
 async def telegram_webhook(request: Request):
     data = await request.json()
-    update = Update.model_validate(data)
+    update = Update.de_json(data, application.bot)
     await application.process_update(update)
     return {"status": "ok"}
 
