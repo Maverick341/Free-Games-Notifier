@@ -13,5 +13,6 @@ USER_WHATSAPP_NUMBER = os.getenv("USER_WHATSAPP_NUMBER")
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 # TELEGRAM_CHAT_IDS = os.getenv("TELEGRAM_CHAT_IDS", "").split(",")
 MONGO_URI = os.getenv("MONGO_URI")
+WEBHOOK_SECRET=os.getenv("WEBHOOK_SECRET")
 
 EPIC_FREE_GAMES_URL = "https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US"

@@ -44,4 +44,4 @@ jobs:
           echo "TELEGRAM_CHAT_IDS=$TELEGRAM_CHAT_IDS"
           
       - name: 🚀 Run Notifier
-        run: python notifier.py
+        run: python -m src.notifier
