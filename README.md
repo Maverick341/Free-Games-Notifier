@@ -3,7 +3,7 @@
 A Python bot that automatically fetches the latest free titles on the Epic Games Store and notifies you via:
 
 - 📩 Discord Webhooks  
-- 💬 Telegram Bot  
+- 💬 Telegram Bot ([**@FGN194_bot**](https://t.me/FGN194_bot))    
 - 📱 (Optional) WhatsApp via Twilio  
 
 It can be run locally or scheduled to run weekly using GitHub Actions.
@@ -16,7 +16,7 @@ It can be run locally or scheduled to run weekly using GitHub Actions.
   Scrapes Epic’s free‐games API and builds a list of current zero‐price promotions.
 - **Multi‐Channel Notifications**  
   - Discord: Posts rich messages via one or more Webhooks.  
-  - Telegram: Sends Markdown‐formatted messages to all subscribed chat IDs (stored in MongoDB).  
+  - Telegram: Send alerts via the bot [**@FGN194_bot**](https://t.me/FGN194_bot), with support for `/start` and `/stop` subscription commands, to all subscribed chat IDs (stored in MongoDB).  
   - WhatsApp (optional): Uses Twilio’s WhatsApp channel to push announcements.
 - **Easy Scheduling**  
   - Local CLI: run on demand.  
@@ -30,7 +30,7 @@ It can be run locally or scheduled to run weekly using GitHub Actions.
 - **HTTP:** requests  
 - **Env:** python-dotenv  
 - **Database:** MongoDB (for Telegram subscriptions)  
-- **Messaging:** Discord Webhooks, Telegram Bot API, Twilio WhatsApp  
+- **Messaging:** Discord Webhooks, Telegram Bot API (`python-telegram-bot`), Twilio WhatsApp  
 - **CI/CD:** GitHub Actions  
 
 ---
@@ -94,28 +94,15 @@ MONGO_URI=mongodb+srv://username:pass@cluster0.mongodb.net/mydb?retryWrites=true
 
 ---
 
-### 3. Subscribe/Unsubscribe (Telegram)
+### 3. Telegram Bot Subscription
 
-The bot sends Telegram messages only to **subscribed** chat IDs stored in MongoDB:
+You can now subscribe/unsubscribe from free game alerts directly using the live Telegram bot:
 
-- **Add** a chat ID manually:
-  1. Send a message to your bot; note your chat ID from BotFather’s \`getUpdates\`.  
-  2. In Mongo Shell or Compass, insert:
+🟢 **Bot Name:** [@FGN194_bot](https://t.me/FGN194_bot)  
+➡️ Use `/start` to subscribe  
+⛔ Use `/stop` to unsubscribe  
 
-```js
-db.subscribers.insertOne({ chat_id: 123456789, subscribed: true });
-```
-
-- **Remove** a chat ID:
-
-```js
-db.subscribers.updateOne(
-  { chat_id: 123456789 },
-  { $set: { subscribed: false } }
-);
-```
-
-*(Future: in-bot `/subscribe` and `/unsubscribe` commands.)*
+No manual MongoDB operations required!
 
 ---
 
