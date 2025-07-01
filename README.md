@@ -1,117 +1,169 @@
-# Epic Games Free Games Notifier
+# Free Games Notifier
 
-This project automatically fetches free games from the **Epic Games Store** and sends notifications via **WhatsApp (Twilio)** and **Discord Webhooks**.
+A Python bot that automatically fetches the latest free titles on the Epic Games Store and notifies you via:
 
-## 🚀 Features
-- Fetches **weekly free games** from the Epic Games Store.
-- Sends notifications via **WhatsApp (Twilio API)**.
-- Notifies in **Discord channels** using webhooks.
-- Sends alerts via **Telegram Bot** and in the channels where the bot is added.
-- Can be run **locally** or via **GitHub Actions (Scheduled Run)**.
+- 📩 Discord Webhooks  
+- 💬 Telegram Bot  
+- 📱 (Optional) WhatsApp via Twilio  
+
+It can be run locally or scheduled to run weekly using GitHub Actions.
 
 ---
 
-## 🖥️ 1️⃣ Running the Bot Locally
+## 🔍 Features
 
-### **Step 1: Clone the Repository**  
-```sh
-git clone https://github.com/your-username/epic-games-notifier.git
-cd epic-games-notifier
+- **Fetch Free Games**  
+  Scrapes Epic’s free‐games API and builds a list of current zero‐price promotions.
+- **Multi‐Channel Notifications**  
+  - Discord: Posts rich messages via one or more Webhooks.  
+  - Telegram: Sends Markdown‐formatted messages to all subscribed chat IDs (stored in MongoDB).  
+  - WhatsApp (optional): Uses Twilio’s WhatsApp channel to push announcements.
+- **Easy Scheduling**  
+  - Local CLI: run on demand.  
+  - GitHub Actions: cron schedule (every Friday at 15:00 UTC by default).
+
+---
+
+## 🛠️ Tech Stack
+
+- **Language:** Python 3.8+  
+- **HTTP:** requests  
+- **Env:** python-dotenv  
+- **Database:** MongoDB (for Telegram subscriptions)  
+- **Messaging:** Discord Webhooks, Telegram Bot API, Twilio WhatsApp  
+- **CI/CD:** GitHub Actions  
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone & Setup
+
+```bash
+git clone https://github.com/Maverick341/Free-Games-Notifier.git
+cd Free-Games-Notifier
 ```
 
-### **Step 2: Set Up Python Environment**  
-Ensure you have **Python 3.8+** installed. 
-Create a virtual environment (recommended):  
-```sh
+Create and activate your virtual environment:
+
+```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate      # macOS/Linux
+venv\Scripts\activate.bat     # Windows
 ```
 
-### **Step 3: Install Dependencies**  
-```sh
+Install dependencies:
+
+```bash
 pip install -r requirements.txt
 ```
 
-### **Step 4: Configure Environment Variables**  
-Create a `.env` file in the project folder and add the following variables:
-```ini
-DISCORD_WEBHOOK_URLS=your_discord_webhook_url1,your_discord_webhook_url1,etc
-TWILIO_SID=your_twilio_sid
-TWILIO_AUTH_TOKEN=your_twilio_auth_token
+---
+
+### 2. Configuration
+
+Copy and edit the sample environment file:
+
+```bash
+cp .env.sample .env
+```
+
+Open `.env` and fill in **all** required values:
+
+```.env
+# Discord
+DISCORD_WEBHOOK_URLS=
+  https://discord.com/api/webhooks/…,
+  https://discord.com/api/webhooks/…
+
+# Twilio (WhatsApp; optional)
+TWILIO_SID=
+TWILIO_AUTH_TOKEN=
 TWILIO_WHATSAPP_NUMBER=whatsapp:+14155238886
-USER_WHATSAPP_NUMBER=whatsapp:+your_number
-TELEGRAM_BOT_TOKEN=your_telegram_bot_token
-TELEGRAM_CHAT_IDS=your_chat_id_1,your_chat_id_2,etc
+USER_WHATSAPP_NUMBER=whatsapp:+91XXXXXXXXXX
+
+# Telegram
+TELEGRAM_BOT_TOKEN=
+# (Chat IDs are managed in MongoDB; see below)
+
+# MongoDB
+MONGO_URI=mongodb+srv://username:pass@cluster0.mongodb.net/mydb?retryWrites=true&w=majority
 ```
-⚠ **Note:** You must add your own **Discord Webhook URL**, **Twilio API credentials**, **Twilio WhatsApp number**, **Telegram Bot Token** and **Telegram Chat IDs**. You also need to **set up Twilio Sandbox** to send and receive messages.
 
-For Telegram:
-- Create a bot via BotFather.
-- Obtain the **Bot Token**
-- Get your chat ID using `https://api.telegram.org/bot<TOKEN>/getUpdates`.
+> ⚠️ Be sure your Bot has the right permissions and that your MongoDB user can read/write the `subscribers` collection.
 
-### **Step 5: Run the Bot**  
-```sh
-python notifier.py
+---
+
+### 3. Subscribe/Unsubscribe (Telegram)
+
+The bot sends Telegram messages only to **subscribed** chat IDs stored in MongoDB:
+
+- **Add** a chat ID manually:
+  1. Send a message to your bot; note your chat ID from BotFather’s \`getUpdates\`.  
+  2. In Mongo Shell or Compass, insert:
+
+```js
+db.subscribers.insertOne({ chat_id: 123456789, subscribed: true });
 ```
-This will fetch the free games and send notifications via **WhatsApp, Discord & Telegram**.
 
----
+- **Remove** a chat ID:
 
-## 🌐 2️⃣ Running the Bot on a GitHub Fork (Using GitHub Actions)
-
-### **Step 1: Fork the Repository**  
-Go to the **original repo** → Click **Fork**.
-
-### **Step 2: Set Up GitHub Secrets**  
-1. Go to your **forked repo** on GitHub.
-2. Navigate to **Settings → Secrets and variables → Actions → New repository secret**.
-3. Add the following secrets (**without quotes**):
-   ```sh
-   DISCORD_WEBHOOK_URLS=your_discord_webhook_url1,your_discord_webhook_url1,etc
-   TWILIO_SID=your_twilio_sid
-   TWILIO_AUTH_TOKEN=your_twilio_auth_token
-   TWILIO_WHATSAPP_NUMBER=whatsapp:+14155238886
-   USER_WHATSAPP_NUMBER=whatsapp:+your_number
-   TELEGRAM_BOT_TOKEN=your_telegram_bot_token
-   TELEGRAM_CHAT_IDS=your_chat_id_1,your_chat_id_2,etc
-   ```
-   ⚠ **Note:** Each user must configure their own **Discord Webhook**, **Twilio credentials**, **Twilio WhatsApp number**, and **Telegram Bot settings** in GitHub Secrets.
-
-### **Step 3: Enable GitHub Actions**  
-1. Go to your repo’s **Actions** tab.
-2. Click on the **workflow file** (e.g., `.github/workflows/schedule.yml`).
-3. Enable workflows if prompted.
-
-### **Step 4: Edit the Schedule (Optional)**  
-- The bot is set to run **every Friday at 8 AM PT** (Epic Games’ schedule).
-- To change the schedule, edit `.github/workflows/schedule.yml`:
-  ```yaml
-  schedule:
-    - cron: "0 15 * * 5"  # Runs every Friday at 8 AM PT (15:00 UTC)
-  ```
-
-### **Step 5: Commit & Push Changes**  
-```sh
-git add .
-git commit -m "Updated GitHub Actions workflow"
-git push origin main
+```js
+db.subscribers.updateOne(
+  { chat_id: 123456789 },
+  { $set: { subscribed: false } }
+);
 ```
-The bot will now **run automatically every week** and send notifications.
 
----
-## 🔮 Future Improvements
-- ✅ ~~Integration with Telegram Bot API (Send free notifications via Telegram)~~
-- 🚀 Support for WhatsApp Cloud API (Free official API from Meta)
-- 🚀 Integration with Telegram Bot API (Send free notifications via Telegram)
-- 🚀 Email (SMTP) alerts (For users without messaging apps)
+*(Future: in-bot `/subscribe` and `/unsubscribe` commands.)*
 
 ---
 
-## 📜 License  
-This project is licensed under the [MIT License](LICENSE).
+## 🎬 Running the Bot
 
-## 🤝 Contributing  
-Feel free to submit pull requests to improve this project!
+### Local Execution
+
+```bash
+python -m src.notifier
+```
+
+Expected output:
+
+```
+Fetching free Epic Games...
+✅ Free games found! Sending notifications...
+```
 
 ---
+
+### Scheduled (GitHub Actions)
+
+1. Fork this repo.  
+2. In **Settings → Secrets → Actions**, add the same keys from your `.env` as GitHub Secrets.  
+3. Enable the `schedule.yml` workflow.  
+   - By default it runs every Friday at 15:00 UTC (`0 15 * * 5`).  
+   - To adjust, edit `.github/workflows/schedule.yml`.
+
+---
+
+## 📈 Future Improvements
+
+- 🔄 ~~Bot commands for users to subscribe/unsubscribe via Telegram~~  
+- ☁️ WhatsApp Cloud API integration  
+- ✉️ Email alerts (SMTP)  
+- 📊 Web dashboard for configuration & stats  
+
+---
+
+## 🤝 Contributing
+
+1. Fork & branch  
+2. Submit a PR with clear scope  
+3. Maintain tests & doc updates  
+
+---
+
+## 📜 License
+
+This project is released under the **MIT License**  
+See [LICENSE](LICENSE) for details.
